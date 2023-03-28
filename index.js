@@ -13,12 +13,16 @@ app.get("/", (req, res) => {
 
 app.post("/students", async (req, res) => {
 
-    const result = new Student(req.body)
-    result.save().then(() => {
-        res.status(201).send(result)
-    }).catch((e) => {
-        res.status(400).send("Error :" + e)
-    })
+    try {
+        const student = new Student(req.body)
+        const result = await student.save()
+        res.send(result).status(201)
+    } catch (error) {
+        res.send(error).status(400)
+    }
+
+
+
 })
 
 
